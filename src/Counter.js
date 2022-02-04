@@ -1,46 +1,34 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useSelector } from 'react-redux'
+import { Link } from "react-router-dom";
 
-class Counter extends Component {
-    constructor() {
-        super()
-        this.state = {
-            count: 0
-        }
-    }
 
-    componentDidMount(){
-        console.log('Your component mounted!')
-        this.setState({
-            count: this.state.count + 1
-        })
-    }
+const Counter = () => {
 
-    incrementCounter = () => {
-        this.setState({
-            count: this.state.count + 1
-        })
-    }
+    const [ count, setCount ] = useState(0)
 
-    decrementCounter = () => {
-        this.setState({
-            count: this.state.count - 1
-        })
-    }
+    useEffect(() => {
+        console.log('use effect was triggered!!!!')
+        setCount(count + 1)
+    }, [])
 
-    render(){
-    return(
-        <div>
-            <h3>Counter Demo</h3>
-            <Link to='/' > Switch to Groceries </Link>
-            <h3>Your counter is at  {this.state.count}</h3>
-            <div>
-                <button onClick={this.decrementCounter}> - </button>
-                <button onClick={this.incrementCounter}> + </button>
-            </div>
-        </div>
-    )
-    }
-}
+   const myState = useSelector((state) => state.groceries)
 
-export default Counter
+   console.log('from the selector!!! ', myState)
+
+  return (
+    <div>
+      <h3>Counter Demo</h3>
+      <Link to="/"> Switch to Groceries </Link>
+      <h3>Your counter is at {count} </h3>
+      <div>
+        <button onClick={() => setCount(count - 1)}> - </button>
+        <button onClick={() => setCount(count + 1)}> + </button>
+      </div>
+    </div>
+  );
+};
+
+export default Counter;
+
+
